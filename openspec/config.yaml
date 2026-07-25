@@ -1,0 +1,63 @@
+schema: spec-driven
+
+context: |
+  Project: patterns-bank (MCP server, hackathon build, 3-day timeline)
+  Purpose: software design-pattern DECISION layer for LLMs — recommends
+    WHEN/WHY to use a pattern (incl. why not the obvious alternative) and
+    flags anti-patterns/over-engineering. Seeded with curated human-authored
+    decision cases retrieved via embeddings.
+  Tech stack: TypeScript on Node.js (Bun acceptable if simpler); MCP server
+    over stdio transport; SQLite for pattern/decision-case persistence +
+    local embeddings for semantic retrieval.
+  Architecture: not yet decided — greenfield, no code written yet.
+  Testing: vitest (planned), Strict TDD disabled by default for hackathon pace.
+  Style: not yet established — greenfield.
+
+strict_tdd: false
+
+testing:
+  test_runner:
+    command: "npx vitest run"
+    framework: vitest
+  layers:
+    unit: true
+    integration: true
+    e2e: false
+  coverage:
+    available: true
+    command: "npx vitest run --coverage"
+  quality:
+    linter: "TBD (eslint recommended)"
+    type_checker: "tsc --noEmit"
+    formatter: "TBD (prettier recommended)"
+
+delivery:
+  pr_strategy: auto-forecast
+  review_budget_lines: 400
+
+rules:
+  proposal:
+    - Include rollback plan for risky changes
+    - Keep scope realistic for a 3-day hackathon timeline
+  specs:
+    - Use Given/When/Then for scenarios
+    - Use RFC 2119 keywords (MUST, SHALL, SHOULD, MAY)
+  design:
+    - Document the embedding/retrieval approach and its tradeoffs
+    - Document MCP tool/resource surface exposed to the LLM client
+  tasks:
+    - Group by phase, use hierarchical numbering
+    - Keep tasks completable in one session
+    - Forecast the 400-line review budget per delivery strategy
+  apply:
+    guidelines:
+      - Follow existing code patterns once established
+      - Favor simplicity appropriate to a 3-day hackathon
+    tdd: false
+    test_command: "npx vitest run"
+  verify:
+    test_command: "npx vitest run"
+    build_command: "npm run build"
+    coverage_threshold: 0
+  archive:
+    - Warn before merging destructive deltas
